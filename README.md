@@ -28,3 +28,9 @@ In the project root, run:
 
 if on mac:
 allure serve employee_app/allure-results manager_app/allure-results
+
+To start Jenkins pipeline:
+docker compose -f docker-compose.jenkins.yml up --build -d
+
+To end the pipeline:
+docker compose down --remove-orphans
