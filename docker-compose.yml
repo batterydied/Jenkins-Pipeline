@@ -1,5 +1,5 @@
 services:
-
+ 
   frontend:
     depends_on:
       - employee-backend
@@ -10,25 +10,25 @@ services:
     environment:
       VITE_EMPLOYEE_API_URL: "http://employee-backend:7070"
       VITE_MANAGER_API_URL: "http://manager-backend:9090"
-
+ 
   employee-backend:
     build: ./employee_app
     ports:
       - "7070:7070"
     volumes:
-      - "sqlite_data:/var/data"
+      - "employee_sqlite_data:/var/data"
     environment:
       DATABASE_URL: "/var/data/expenses_system_db.db"
       CONTAINER: "DOCKER"
       BASE_URL: "http://frontend:5173"
       SELENIUM_URL: "http://selenium:4444/wd/hub"
-
+ 
   manager-backend:
     build: ./manager_app
     ports:
       - "9090:9090"
     volumes:
-      - "sqlite_data:/var/data"
+      - "manager_sqlite_data:/var/data"
     environment:
       DATABASE_URL: "/var/data/expenses_system_db.db"
       CONTAINER: "DOCKER"
@@ -36,13 +36,14 @@ services:
       MANAGER_URL: "http://manager-backend:9090"
       BASE_URL: "http://frontend:5173"
       SELENIUM_URL: "http://selenium:4444/wd/hub"
-  
+ 
   selenium:
     image: selenium/standalone-chromium:latest
     shm_size: "2gb"
     ports:
       - "4444:4444"
       - "7900:7900"
-
+ 
 volumes:
-  sqlite_data:
+  employee_sqlite_data:
+  manager_sqlite_data:
